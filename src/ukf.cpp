@@ -70,8 +70,8 @@ UKF::UKF() {
   n_z_radar_ = 3;
   
   // spreding Parameter
-  //lambda_ = 3-n_aug_;
-  lambda_ = 3.0-n_x_;
+  lambda_ = 3.0-n_aug_;
+  //lambda_ = 3.0-n_x_;
 
   // Sigma Points
   Xsig_pred_ = MatrixXd(n_x_ , 2*n_aug_+1);
