@@ -107,8 +107,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     // initialize the filter with measurement values and don't predict
     if (meas_package.sensor_type_ == MeasurementPackage::LASER) 
     {     
-      x_(0) = meas_package.raw_measurements_(0); // position
-      x_(1) = meas_package.raw_measurements_(1); // velocity
+      x_(0) = meas_package.raw_measurements_(0); 
+      x_(1) = meas_package.raw_measurements_(1); 
       x_(2) = 0;
       x_(3) = 0;
       x_(4) = 0;  
