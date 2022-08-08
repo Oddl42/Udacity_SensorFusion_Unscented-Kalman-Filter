@@ -89,7 +89,13 @@ class UKF {
 
   // State dimension
   int n_x_;
-
+  
+ // Dimension Lidar Measurement
+  int n_z_laser_;
+ 
+ // Dimension Radar Measurement
+  int n_z_radar_;
+ 
   // Augmented state dimension
   int n_aug_;
 
