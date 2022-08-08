@@ -267,7 +267,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    * You can also calculate the lidar NIS, if desired.
    */
   
-  // radar incoming measurement
+  //incoming measurement
   VectorXd z = VectorXd(n_z_laser_);
   z = meas_package.raw_measurements_;
 
@@ -356,7 +356,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
    */
 
   // set measurement dimension, radar can measure r, phi, and r_dot
-  // radar incoming measurement
+  // incoming measurement
   VectorXd z = VectorXd(n_z_radar_);
   z = meas_package.raw_measurements_;
   // create matrix for sigma points in measurement space
