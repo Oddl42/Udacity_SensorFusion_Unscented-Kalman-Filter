@@ -201,7 +201,6 @@ void UKF::Prediction(double delta_t) {
   // transform sigma points into measurement space
   for (int i = 0; i < 2*n_aug_ + 1; ++i) 
   {
-    // extract values for better readabiilty
     double p_x      = Xsig_aug(0,i);
     double p_y      = Xsig_aug(1,i);
     double v        = Xsig_aug(2,i);
