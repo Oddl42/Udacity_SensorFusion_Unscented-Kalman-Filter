@@ -113,7 +113,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
       x_(3) = 0;
       x_(4) = 0;  
       
-      cout <<"init LASER"<<x_<< endl;
+      //cout <<"init LASER"<<x_<< endl;
     } 
     else if (meas_package.sensor_type_ == MeasurementPackage::RADAR) 
     {
@@ -131,7 +131,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
       x_(3) = 0;
       x_(4) = 0;   
 
-      cout <<"init RADAR"<<x_<< endl;
+      //cout <<"init RADAR"<<x_<< endl;
     }
 
     P_(3,3) = 0.5;
@@ -160,8 +160,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     {
       UpdateRadar(meas_package);
     }
-    cout << "timestamp : " << time_us_ << endl;
-    cout << "State X : " << x_.transpose() << endl;
+    //cout << "timestamp : " << time_us_ << endl;
+    //cout << "State X : " << x_.transpose() << endl;
   }
   //std::cout<<"Process Measurement End"<<std::endl;
 }
@@ -181,7 +181,7 @@ void UKF::Prediction(double delta_t) {
   // populate augmented matrices
   x_aug.setZero();
   x_aug.head(n_x_) = x_;
-  cout<<"x aug : " << x_.transpose() <<endl;
+  //cout<<"x aug : " << x_.transpose() <<endl;
 
   P_aug.setZero();
   P_aug.topLeftCorner(n_x_, n_x_) = P_;
@@ -199,7 +199,7 @@ void UKF::Prediction(double delta_t) {
     Xsig_aug.col(i+1)        = x_aug + sqrt(lambda_ + n_aug_) * L.col(i);
     Xsig_aug.col(i+1+n_aug_) = x_aug - sqrt(lambda_ + n_aug_) * L.col(i);
   }
-  cout<<"Xsig_aug_ : "<< Xsig_aug <<endl;
+  //cout<<"Xsig_aug_ : "<< Xsig_aug <<endl;
 
   // transform sigma points into measurement space
   for (int i = 0; i < 2*n_aug_ + 1; ++i) 
@@ -214,7 +214,7 @@ void UKF::Prediction(double delta_t) {
     double nu_yawdd = Xsig_aug(6,i);
 
     // predicted state values
-      double px_p, py_p;
+    double px_p, py_p;
     if (fabs(dyaw) >  0.001)
     {
       px_p = p_x + v/dyaw * (sin(yaw + dyaw*delta_t) - sin(yaw)) + 0.5*nu_a*pow(delta_t,2) * cos(yaw);;
@@ -238,7 +238,7 @@ void UKF::Prediction(double delta_t) {
     Xsig_pred_(4,i) = yawd_p;
 
   }
-  cout<<"Xsig_pred : " << Xsig_pred_ <<endl;
+  //cout<<"Xsig_pred : " << Xsig_pred_ <<endl;
 
   // predicted state mean
   x_.setZero();
