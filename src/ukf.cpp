@@ -24,10 +24,10 @@ UKF::UKF() {
   P_ = MatrixXd(5, 5);
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 30;
+  std_a_ = 0.75;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 30;
+  std_yawdd_ = 0.5;
   
   /**
    * DO NOT MODIFY measurement noise values below.
@@ -107,8 +107,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     // initialize the filter with measurement values and don't predict
     if (meas_package.sensor_type_ == MeasurementPackage::LASER) 
     {     
-      x_(0) = meas_package.raw_measurements_(0); 
-      x_(1) = meas_package.raw_measurements_(1); 
+      x_(0) = meas_package.raw_measurements_(0); // position
+      x_(1) = meas_package.raw_measurements_(1); // velocity
       x_(2) = 0;
       x_(3) = 0;
       x_(4) = 0;  
@@ -133,6 +133,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
       cout <<"init RADAR"<<x_<< endl;
     }
+
+    P_(3,3) = 0.5;
+    P_(4,4) = 0.5;
 
     time_us_ = meas_package.timestamp_;
     is_initialized_ = true;
@@ -201,6 +204,7 @@ void UKF::Prediction(double delta_t) {
   // transform sigma points into measurement space
   for (int i = 0; i < 2*n_aug_ + 1; ++i) 
   {
+    // extract values for better readabiilty
     double p_x      = Xsig_aug(0,i);
     double p_y      = Xsig_aug(1,i);
     double v        = Xsig_aug(2,i);
@@ -267,7 +271,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    * You can also calculate the lidar NIS, if desired.
    */
   
-  //incoming measurement
+  // radar incoming measurement
   VectorXd z = VectorXd(n_z_laser_);
   z = meas_package.raw_measurements_;
 
@@ -356,7 +360,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
    */
 
   // set measurement dimension, radar can measure r, phi, and r_dot
-  // incoming measurement
+  // radar incoming measurement
   VectorXd z = VectorXd(n_z_radar_);
   z = meas_package.raw_measurements_;
   // create matrix for sigma points in measurement space
